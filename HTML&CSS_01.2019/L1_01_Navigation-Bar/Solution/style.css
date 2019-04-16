@@ -1,0 +1,20 @@
+body{
+    background-color: bisque;
+}
+nav{
+    background-color: darkolivegreen;
+    text-align: center;
+}
+ul, body{
+    margin: 0;
+}
+nav ul li a{
+    font-family: Helvetica, SansSerif;
+    text-decoration: none;
+    color: wheat;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 10px;
+ }
