@@ -31,3 +31,14 @@ D:\Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.runtime
 D:\Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.runtimeconfig.dev.json
 D:\Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.dll
 D:\Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.pdb
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.deps.json
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.runtimeconfig.json
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.runtimeconfig.dev.json
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.dll
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\bin\Debug\netcoreapp2.0\TeisterMask.pdb
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\obj\Debug\netcoreapp2.0\TeisterMask.csprojAssemblyReference.cache
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\obj\Debug\netcoreapp2.0\TeisterMask.csproj.CoreCompileInputs.cache
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\obj\Debug\netcoreapp2.0\TeisterMask.AssemblyInfoInputs.cache
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\obj\Debug\netcoreapp2.0\TeisterMask.AssemblyInfo.cs
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\obj\Debug\netcoreapp2.0\TeisterMask.dll
+D:\Lokal_Repo\Web_Projects\Teister_Mask\TeisterMask\obj\Debug\netcoreapp2.0\TeisterMask.pdb
