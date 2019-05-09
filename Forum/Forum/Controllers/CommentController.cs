@@ -84,10 +84,17 @@ namespace Forum.Controllers
                 return RedirectPermanent($"/Topic/Details/{topicId}");
             }
 
+            if (!comment.IsAuthor(User.Identity.Name))
+            {
+                return Forbid();
+            }
+
             return View(comment);
         }
 
         //POST: /Topic/Details/{topicId}/Comment/Edit/{id}
+        [HttpPost]
+        [Authorize]
         [Route("/Topic/Details/{TopicId}/Comment/Edit/{id}")]
         public IActionResult Edit(Comment comment)
         {
@@ -137,6 +144,11 @@ namespace Forum.Controllers
             if (comment == null)
             {
                 return RedirectPermanent("/Topic/Details/{topicId}");
+            }
+
+            if (!comment.IsAuthor(User.Identity.Name))
+            {
+                return Forbid();
             }
 
             return View(comment);

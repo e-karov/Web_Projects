@@ -21,6 +21,12 @@ namespace Forum.Controllers
 
         public IActionResult Index()
         {
+            List<Category> categories = context
+                .Categories
+                .Include(c => c.Author)
+                .Include(c => c.Topics)
+                .ThenInclude(t => t.Author).ToList();
+
             List<Topic> topics = context.Topics
                 .Include(t => t.Author)
                 .Include(t => t.Comments)
@@ -28,6 +34,8 @@ namespace Forum.Controllers
                 .OrderByDescending(t => t.CreatedDate)
                 .ThenByDescending(t => t.LastUpdatedDate)
                 .ToList();
+
+            ViewData["Categories"] = categories;
 
             return View(topics);
         }

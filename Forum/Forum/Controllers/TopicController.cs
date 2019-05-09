@@ -34,16 +34,18 @@ namespace Forum.Controllers
 
             Topic topic = context.Topics
                 .Include(t => t.Author)
+                .Include(t => t.Category)
                 .Include(t => t.Comments)
                 .ThenInclude(c => c.Author)
                 .Where(t => t.Id == id)
-                .FirstOrDefault();
+                .SingleOrDefault();
 
             if (topic == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
+            
             return View(topic);
         }
 
@@ -51,6 +53,9 @@ namespace Forum.Controllers
         [Authorize]
         public IActionResult Create()
         {
+            var categoryNames = context.Categories.Select(c => c.Name).ToList();
+
+            ViewData["CategoryNames"] = categoryNames;
             return View();
         }
 
@@ -58,11 +63,11 @@ namespace Forum.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create (Topic topic)
+        public IActionResult Create (string categoryName, Topic topic)
         {
             if (ModelState.IsValid)
             {
-                                    // Insert topic in DB:
+                              // Insert topic in DB:
 
                 // - Set CreatedDate and LastUpdadetDate:
                 topic.CreatedDate = DateTime.Now;
@@ -77,6 +82,15 @@ namespace Forum.Controllers
                 // - Set topic authorId:
                 topic.AuthorId = authorId;
 
+                if (!context.Categories.Any(c => c.Name == categoryName))
+                {
+                    return View(topic);
+                }
+
+                int categoryId = context.Categories.SingleOrDefault(c => c.Name == categoryName).Id;
+
+                topic.CategoryId = categoryId;
+
                 // - Save topic:
                 context.Topics.Add(topic);
                 context.SaveChanges();
@@ -87,6 +101,7 @@ namespace Forum.Controllers
         }
 
         // Get: Topic/Delete/id
+        [HttpGet]
         [Authorize]
         public IActionResult Delete (int? id)
         {
@@ -102,6 +117,11 @@ namespace Forum.Controllers
             if (topic == null)
             {
                 return RedirectToAction("Index", "Home");
+            }
+
+            if (!topic.IsAuthor(User.Identity.Name))
+            {
+                return Forbid();
             }
 
             return View(topic);
@@ -130,7 +150,7 @@ namespace Forum.Controllers
         }
 
         //GET: Topic/Edti/id:
-
+        [HttpGet]
         public IActionResult Edit (int? id)
         {
             // checking if id is null:
@@ -142,6 +162,7 @@ namespace Forum.Controllers
             // getting topic from DB:
             Topic topic = context.Topics
                 .Include(t => t.Author)
+                .Include(t => t.Category)
                 .Where(t => t.Id == id)
                 .SingleOrDefault();
 
@@ -151,6 +172,15 @@ namespace Forum.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            if (!topic.IsAuthor(User.Identity.Name))
+            {
+                return Forbid();
+            }
+
+            var categoryNames = context.Categories.Select(c => c.Name).ToList();
+
+            ViewData["CategoryNames"] = categoryNames;
+
             // passing the model to the view:
             return View(topic);
         }
@@ -158,7 +188,7 @@ namespace Forum.Controllers
         //POST: Topic/Edit/id
         [HttpPost]
         [Authorize]
-        public IActionResult Edit (Topic topic)
+        public IActionResult Edit (string categoryName, Topic topic)
         {
             if (ModelState.IsValid)
             {
@@ -173,6 +203,9 @@ namespace Forum.Controllers
 
                 topicToEdit.Title = topic.Title;
                 topicToEdit.Description = topic.Description;
+
+                int categoryId = context.Categories.SingleOrDefault(c => c.Name == categoryName).Id;
+                topicToEdit.CategoryId = categoryId;
 
                 topicToEdit.LastUpdatedDate = DateTime.Now;
 

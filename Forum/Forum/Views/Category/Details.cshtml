@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Topic>
+﻿@model Category
+
 @{
-    ViewData["Title"] = "Index";
     List<Category> categories = (List<Category>)ViewData["Categories"];
 }
 
@@ -11,6 +11,7 @@
                 <p>
                     <a asp-controller="Category" asp-action="Create" class="btn btn-default">Create New Category</a>
                 </p>
+
                 <h3>Categories</h3>
                 <ul>
                     <li>
@@ -31,9 +32,16 @@
         <section class="col-md-9 col-sm-12 article-wrapper">
             <p>
                 <a asp-controller="Topic" asp-action="Create" class="btn btn-default">Create New Topic</a>
+                @if (Model.IsAuthor(User.Identity.Name))
+                {
+                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Edit</a>
+                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-default">Delete</a>
+                }
             </p>
 
-            @foreach (var topic in Model)
+            @foreach (var topic in Model.Topics
+                                     .OrderByDescending(t => t.CreatedDate)
+                                     .ThenByDescending(t => t.LastUpdatedDate))
             {
                 <article class="forum-post">
                     <div class="head-post">
@@ -66,12 +74,12 @@
                                     <span class="cell replay-date">@topic.LastUpdatedDate.ToString("HH:mm dd/MMM/yyyy")</span>
                                 </div>
                             </div>
-                            <div class="col-md-6 stats-holder">
-                                <span class="item-wrap">
-                                    <span class="cell">Comments: </span>
-                                    <span class="cell">@topic.NumberComments</span>
-                                </span>
-                            </div>
+                        </div>
+                        <div class="col-md-6 stats-holder">
+                            <span class="item-wrap">
+                                <span class="cell">Comments: </span>
+                                <span class="cell">@topic.NumberComments</span>
+                            </span>
                         </div>
                     </div>
                 </article>

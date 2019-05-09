@@ -14,6 +14,9 @@ namespace Forum.Data
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
+
         public ForumDbContext(DbContextOptions<ForumDbContext> options)
             : base(options)
         {

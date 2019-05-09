@@ -9,12 +9,21 @@ namespace Forum.Models
 {
     public class Topic
     {
+        public Topic()
+        {
+            this.Comments = new List<Comment>();
+        }
+
         [Key]
         public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
         public string Title { get; set; }
+
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -36,9 +45,10 @@ namespace Forum.Models
         [Display(Name = "Number Comments")]
         public int NumberComments => Comments.Count;
 
-        public Topic()
+        public bool IsAuthor (string id)
         {
-            this.Comments = new List<Comment>();
+            return this.Author.UserName.Equals(id);
         }
+
     }
 }
